@@ -8,27 +8,33 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         """
-        Создаються тестовые данные, минимально необходимые для использования приложения.
+        Создаются тестовые данные, минимально необходимые для использования приложения.
         Пользователи, валюты, курсы валют.
         """
 
         currency_base, _ = Currency.objects.get_or_create(symbol='руб.', title='Рубль', multiplicity=1, is_base=True)
-        currency_one, _ = Currency.objects.get_or_create(symbol='$', title='Доллар', multiplicity=100)
-        currency_two, _ = Currency.objects.get_or_create(symbol='€', title='Еворо ', multiplicity=1)
-
-        # Создается курс для базовой валюты - рубля
         Course.objects.get_or_create(currency=currency_base, course=1)
 
-        # Допустим 1000 рублям соответсвует 2 доллара
-        course_one_value = 2 * currency_one.multiplicity / 100
-        Course.objects.get_or_create(currency=currency_one, course=course_one_value)
+        # Допустим 100 рублям соответствует 2 доллара
+        currency1, _ = Currency.objects.get_or_create(symbol='$', title='Доллар', multiplicity=100)
+        course_value = 2 * currency1.multiplicity / 100
+        Course.objects.get_or_create(currency=currency1, course=course_value)
 
-        # Допустим 100 рублям соответсвует 15 евро
-        currency_two_value = 15 * currency_two.multiplicity / 100
-        Course.objects.get_or_create(currency=currency_two, course=currency_two_value)
+        # Допустим 100 рублям соответствует 15 евро
+        currency2, _ = Currency.objects.get_or_create(symbol='€', title='Еворо ', multiplicity=1)
+        course_value = 15 * currency2.multiplicity / 100
+        Course.objects.get_or_create(currency=currency2, course=course_value)
 
-        User.objects.all().delete()
+        # Допустим 100 рублям соответствует 50 фунтов
+        currency3, _ = Currency.objects.get_or_create(symbol='GPB', title='Фунт ', multiplicity=10)
+        course_value = 50 * currency3.multiplicity / 100
+        Course.objects.get_or_create(currency=currency3, course=course_value)
+
+        # Допустим 100 рублям соответствует 1 биткоин
+        currency4, _ = Currency.objects.get_or_create(symbol='BTC', title='Биткоин ', multiplicity=1)
+        course_value = 1 * currency4.multiplicity / 100
+        Course.objects.get_or_create(currency=currency4, course=course_value)
 
         User.objects.create_superuser('superuser@mail.ru', 'password', balance=1000, currency=currency_base)
-        User.objects.create_user('user_one@mail.ru', 'password', balance=1000, currency=currency_one)
-        User.objects.create_user('user_two@mail.ru', 'password', balance=1000, currency=currency_two)
+        User.objects.create_user('user_one@mail.ru', 'password', balance=1000, currency=currency1)
+        User.objects.create_user('user_two@mail.ru', 'password', balance=1000, currency=currency2)
