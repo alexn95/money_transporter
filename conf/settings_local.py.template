@@ -1,0 +1,15 @@
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'money_transporter',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'USER': '',
+        'PASSWORD': ''
+    }
+}
+
+ALLOWED_HOSTS = ['*']
+
+DEBUG = True
