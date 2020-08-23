@@ -44,6 +44,7 @@ APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
+    'money_transporter',
 ]
 
 INSTALLED_APPS += APPS
